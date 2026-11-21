@@ -1,11 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "Edge 标签页管理 POC",
+  "name": "Edge Tab Management POC",
   "version": "0.1.0",
-  "description": "按标签组卸载后台标签页，查看地址与使用状态，可选上报至 Telegraf。",
+  "description": "Discard background tabs by group, view URLs and tab status, and optionally report snapshots to Telegraf.",
   "incognito": "not_allowed",
   "permissions": ["tabs", "tabGroups", "alarms", "storage"],
   "host_permissions": ["https://telegraf.example.invalid/*"],
   "background": { "service_worker": "background.js", "type": "module" },
-  "action": { "default_title": "标签页管理", "default_popup": "popup.html" }
+  "action": { "default_title": "Tab Management", "default_popup": "popup.html" }
 }

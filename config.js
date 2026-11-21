@@ -1,5 +1,5 @@
 export const config = {
-  // 配好内网接收地址后，也要在 manifest 的 host_permissions 中替换域名。
+  // After setting the internal endpoint, update host_permissions in manifest.json.
   telegrafUrl: "",
   snapshotIntervalMinutes: 5,
   includeQueryAndFragment: false,

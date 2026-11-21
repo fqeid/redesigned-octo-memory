@@ -34,7 +34,7 @@ th, td { text-align: left; padding: 7px 9px; border-bottom: 1px solid var(--rule
 th { position: sticky; top: 0; background: Canvas; }
 th:nth-child(2) { width: 107px; }
 th:nth-child(3) { width: 122px; }
-th:last-child { width: 58px; }
+th:last-child { width: 72px; }
 td:first-child { overflow-wrap: anywhere; }
 td:nth-child(3) { font-variant-numeric: tabular-nums; }
 tbody tr:last-child td { border-bottom: 0; }

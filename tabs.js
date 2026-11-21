@@ -36,11 +36,11 @@ export async function collectTabs(query = {}, includeQueryAndFragment = false) {
 }
 
 export function skipReason(tab) {
-  if (!tab.address) return "非 HTTP(S) 或地址不可用";
-  if (tab.activeInWindow) return "窗口当前标签页";
-  if (tab.discarded) return "已卸载";
-  if (tab.pinned) return "已固定";
-  if (tab.audible) return "正在播放音频";
+  if (!tab.address) return "Unsupported or unavailable URL";
+  if (tab.activeInWindow) return "Active in window";
+  if (tab.discarded) return "Already discarded";
+  if (tab.pinned) return "Pinned";
+  if (tab.audible) return "Playing audio";
   return "";
 }
 
@@ -54,7 +54,7 @@ export async function discardTabs(windowId, target) {
   for (const candidate of selected) {
     let tab;
     try {
-      // 组操作可能在执行期间遇到关闭、移动或换组，按稳定的标签 ID 再确认。
+      // Recheck by tab ID because tabs can close, move, or change groups during a group operation.
       const current = await chrome.tabs.get(candidate.id);
       if (!current.incognito && current.windowId === windowId &&
           (target.groupId === undefined || current.groupId === target.groupId)) {
@@ -63,7 +63,7 @@ export async function discardTabs(windowId, target) {
     } catch {
       tab = undefined;
     }
-    const reason = tab ? skipReason(tab) : "标签页已关闭或移出范围";
+    const reason = tab ? skipReason(tab) : "Tab closed or moved out of scope";
     if (reason) {
       result.skipped++;
       result.skipReasons[reason] = (result.skipReasons[reason] ?? 0) + 1;
@@ -79,7 +79,7 @@ export async function discardTabs(windowId, target) {
   }
   if (!selected.length && target.tabId !== undefined) {
     result.skipped = 1;
-    result.skipReasons["标签页已关闭或移出范围"] = 1;
+    result.skipReasons["Tab closed or moved out of scope"] = 1;
   }
   return result;
 }

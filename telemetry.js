@@ -7,7 +7,7 @@ export function endpoint() {
   const loopback = ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname);
   if (url.username || url.password || (url.protocol !== "https:" &&
       !(url.protocol === "http:" && loopback))) {
-    throw new Error("Telegraf 地址须为 HTTPS，本机测试可用 HTTP，地址中不能带账号密码。");
+    throw new Error("Use HTTPS for the Telegraf URL. HTTP is allowed for loopback testing. Leave credentials out of the URL.");
   }
   return url.href;
 }
@@ -63,9 +63,9 @@ async function uploadSnapshot() {
       signal: AbortSignal.timeout(5000),
     });
   } catch {
-    throw new Error("无法连接 Telegraf。请检查地址、网络和站点权限。");
+    throw new Error("Could not connect to Telegraf. Check the URL, network, and host permissions.");
   }
-  if (!response.ok) throw new Error("Telegraf 返回 HTTP " + response.status + "。");
+  if (!response.ok) throw new Error("Telegraf returned HTTP " + response.status + ".");
   return { status: "sent", count: lines.length };
 }
 

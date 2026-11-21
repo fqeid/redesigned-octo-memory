@@ -18,12 +18,12 @@ async function syncAlarm() {
 
 async function handleMessage(message) {
   if (message.type === "snapshot") return sendSnapshot();
-  if (message.type !== "discard") throw new Error("未知操作。");
+  if (message.type !== "discard") throw new Error("Unknown action.");
   const { windowId, tabId, groupId } = message;
   const validTarget = (Number.isInteger(tabId) && groupId === undefined) ||
     (Number.isInteger(groupId) && groupId >= 0 && tabId === undefined);
-  if (!Number.isInteger(windowId) || !validTarget) throw new Error("找不到目标标签页或标签组。");
-  if (discardInProgress) throw new Error("已有卸载操作正在执行。");
+  if (!Number.isInteger(windowId) || !validTarget) throw new Error("The target tab or group could not be found.");
+  if (discardInProgress) throw new Error("A discard operation is already in progress.");
   discardInProgress = true;
   try {
     return await discardTabs(windowId, { tabId, groupId });
@@ -50,7 +50,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 let alarmSync;
 function ensureAlarm() {
   alarmSync ??= syncAlarm().catch(() => {
-    console.warn("无法设置标签页快照定时任务，请检查 Telegraf 配置。");
+    console.warn("Could not schedule tab snapshots. Check the Telegraf configuration.");
   }).finally(() => { alarmSync = undefined; });
 }
 
