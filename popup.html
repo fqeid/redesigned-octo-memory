@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="popup.css">
+  <title>标签页管理</title>
+</head>
+<body>
+  <header>
+    <h1>标签页管理</h1>
+    <p id="summary">正在读取当前窗口…</p>
+  </header>
+
+  <div class="controls">
+    <label for="group">标签组</label>
+    <select id="group" disabled></select>
+    <button id="discard-group" class="primary" disabled>卸载所选组</button>
+    <button id="refresh">刷新</button>
+  </div>
+
+  <div class="table-wrap" tabindex="0" aria-label="当前窗口标签页">
+    <table>
+      <thead><tr><th>地址</th><th>状态</th><th>上次激活</th><th>操作</th></tr></thead>
+      <tbody id="tabs"></tbody>
+    </table>
+  </div>
+
+  <p id="notice" role="status"></p>
+  <footer>
+    <span id="telemetry-status"></span>
+    <button id="send" disabled>上报所有窗口</button>
+  </footer>
+  <p id="upload-result" role="status" hidden></p>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>
